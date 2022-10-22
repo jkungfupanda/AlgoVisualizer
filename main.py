@@ -5,11 +5,13 @@ import time
 pygame.init()
 
 class DrawInformation:
+	BLUE = 0, 0, 255
 	BLACK = 0, 0, 0
 	WHITE = 255, 255, 255
 	GREEN = 0, 255, 0
 	RED = 255, 0, 0
 	BACKGROUND_COLOR = BLACK
+	
 
 	GRADIENTS = [
 		(128, 128, 128),
@@ -65,6 +67,7 @@ def draw_list(draw_info, color_positions={}, clear_bg=False):
 		clear_rect = (draw_info.SIDE_PAD//2, draw_info.TOP_PAD,
 						draw_info.width - draw_info.SIDE_PAD, draw_info.height - draw_info.TOP_PAD)
 		pygame.draw.rect(draw_info.window, draw_info.BACKGROUND_COLOR, clear_rect)
+		
 
 	for i, val in enumerate(lst):
 		x = draw_info.start_x + i * draw_info.block_width
@@ -76,6 +79,8 @@ def draw_list(draw_info, color_positions={}, clear_bg=False):
 			color = color_positions[i]
 
 		pygame.draw.rect(draw_info.window, color, (x, y, draw_info.block_width, draw_info.height))
+		number = draw_info.FONT.render(f" {val} ", 1, draw_info.BLUE)
+		draw_info.window.blit(number, (x - 9, y))
 
 	if clear_bg:
 		pygame.display.update()
@@ -134,7 +139,7 @@ def main():
 
 	n = 25
 	min_val = 0
-	max_val = 100
+	max_val = 99
 
 	lst = generate_starting_list(n, min_val, max_val)
 	draw_info = DrawInformation(1000, 800, lst)
